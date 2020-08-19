@@ -194,18 +194,8 @@ export interface PluginOptions {
   include: (options: {
     path: string;
     rootDirName?: string;
-    appendToTop?: [
-      {
-        path: string;
-        content: string;
-      }
-    ];
-    appendToBottom?: [
-      {
-        path: string;
-        content: string;
-      }
-    ];
+    appendToTop?: Record<string, string>;
+    appendToBottom?: Record<string, string>;
   }) => Promise<void>;
 }
 
