@@ -1,80 +1,81 @@
 // all known docset entry types
-export type DocsetEntryType =
-  | "Annotation"
-  | "Attribute"
-  | "Binding"
-  | "Builtin"
-  | "Callback"
-  | "Category"
-  | "Class"
-  | "Command"
-  | "Component"
-  | "Constant"
-  | "Constructor"
-  | "Define"
-  | "Delegate"
-  | "Diagram"
-  | "Directive"
-  | "Element"
-  | "Entry"
-  | "Enum"
-  | "Environment"
-  | "Error"
-  | "Event"
-  | "Exception"
-  | "Extension"
-  | "Field"
-  | "File"
-  | "Filter"
-  | "Framework"
-  | "Function"
-  | "Global"
-  | "Guide"
-  | "Hook"
-  | "Instance"
-  | "Instruction"
-  | "Interface"
-  | "Keyword"
-  | "Library"
-  | "Literal"
-  | "Macro"
-  | "Method"
-  | "Mixin"
-  | "Modifier"
-  | "Module"
-  | "Namespace"
-  | "Notation"
-  | "Object"
-  | "Operator"
-  | "Option"
-  | "Package"
-  | "Parameter"
-  | "Plugin"
-  | "Procedure"
-  | "Property"
-  | "Protocol"
-  | "Provider"
-  | "Provisioner"
-  | "Query"
-  | "Record"
-  | "Resource"
-  | "Sample"
-  | "Section"
-  | "Service"
-  | "Setting"
-  | "Shortcut"
-  | "Statement"
-  | "Struct"
-  | "Style"
-  | "Subroutine"
-  | "Tag"
-  | "Test"
-  | "Trait"
-  | "Type"
-  | "Union"
-  | "Value"
-  | "Variable"
-  | "Word";
+export enum DocsetEntryType {
+  Annotation = "Annotation",
+  Attribute = "Attribute",
+  Binding = "Binding",
+  Builtin = "Builtin",
+  Callback = "Callback",
+  Category = "Category",
+  Class = "Class",
+  Command = "Command",
+  Component = "Component",
+  Constant = "Constant",
+  Constructor = "Constructor",
+  Define = "Define",
+  Delegate = "Delegate",
+  Diagram = "Diagram",
+  Directive = "Directive",
+  Element = "Element",
+  Entry = "Entry",
+  Enum = "Enum",
+  Environment = "Environment",
+  Error = "Error",
+  Event = "Event",
+  Exception = "Exception",
+  Extension = "Extension",
+  Field = "Field",
+  File = "File",
+  Filter = "Filter",
+  Framework = "Framework",
+  Function = "Function",
+  Global = "Global",
+  Guide = "Guide",
+  Hook = "Hook",
+  Instance = "Instance",
+  Instruction = "Instruction",
+  Interface = "Interface",
+  Keyword = "Keyword",
+  Library = "Library",
+  Literal = "Literal",
+  Macro = "Macro",
+  Method = "Method",
+  Mixin = "Mixin",
+  Modifier = "Modifier",
+  Module = "Module",
+  Namespace = "Namespace",
+  Notation = "Notation",
+  Object = "Object",
+  Operator = "Operator",
+  Option = "Option",
+  Package = "Package",
+  Parameter = "Parameter",
+  Plugin = "Plugin",
+  Procedure = "Procedure",
+  Property = "Property",
+  Protocol = "Protocol",
+  Provider = "Provider",
+  Provisioner = "Provisioner",
+  Query = "Query",
+  Record = "Record",
+  Resource = "Resource",
+  Sample = "Sample",
+  Section = "Section",
+  Service = "Service",
+  Setting = "Setting",
+  Shortcut = "Shortcut",
+  Statement = "Statement",
+  Struct = "Struct",
+  Style = "Style",
+  Subroutine = "Subroutine",
+  Tag = "Tag",
+  Test = "Test",
+  Trait = "Trait",
+  Type = "Type",
+  Union = "Union",
+  Value = "Value",
+  Variable = "Variable",
+  Word = "Word",
+}
 
 export interface DocsetEntries {
   Annotation?: Record<string, string>;
@@ -152,13 +153,10 @@ export interface DocsetEntries {
   Value?: Record<string, string>;
   Variable?: Record<string, string>;
   Word?: Record<string, string>;
+  index?: string;
 }
 
 export interface MainOptions {
-  // the name of the index file e.g. "index.html"
-  indexFileName?: string;
-  // the path of the index file directory relative to the base path
-  indexFileDirPath?: string;
   // the equivalent of the package name for the docset, will use package.json name if doesn't exist
   docsetIdentifier?: string;
   // human readable name of the docset (will default to docsetIdentifier)
@@ -182,7 +180,8 @@ export interface MainOptions {
   // all plugins
   plugins?: {
     plugin: Plugin;
-    options: any;
+    options?: any;
+    useAsIndex?: boolean;
   }[];
 }
 
@@ -192,7 +191,22 @@ export interface PluginOptions {
   mainOptions: MainOptions & { dryRun: boolean };
   pluginOptions: any;
   createTmpFolder: () => Promise<string>;
-  include: (options: { path: string; includeRoot?: boolean }) => Promise<void>;
+  include: (options: {
+    path: string;
+    rootDirName?: string;
+    appendToTop?: [
+      {
+        path: string;
+        content: string;
+      }
+    ];
+    appendToBottom?: [
+      {
+        path: string;
+        content: string;
+      }
+    ];
+  }) => Promise<void>;
 }
 
 export interface PluginResponse {
