@@ -196,6 +196,7 @@ export interface PluginOptions {
     rootDirName?: string;
     appendToTop?: Record<string, string>;
     appendToBottom?: Record<string, string>;
+    remove?: boolean;
   }) => Promise<void>;
 }
 
