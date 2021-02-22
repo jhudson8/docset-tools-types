@@ -180,6 +180,7 @@ export interface MainOptions {
   // the full path where the output should be copied (if not compressed)
   outputPath?: string;
   // all plugins
+  plist?: Record<string, any>;
   plugins?: {
     plugin: Plugin;
     options?: any;
