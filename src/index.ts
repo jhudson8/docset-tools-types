@@ -169,6 +169,8 @@ export interface MainOptions {
   fallbackUrl?: string;
   // all docset entries
   entries?: DocsetEntries;
+  // index path to be used - will ovverride any path specified by a plugin
+  indexPath?: string;
   // absolute path where icons exist (icon.png and icon@2x.png)
   iconsPath?: string;
   // absolute path for the docset files to be exposed in the docset
